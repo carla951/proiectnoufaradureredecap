@@ -12,6 +12,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -26,6 +29,11 @@ public class BaseTest {
 
 	WebDriver driver;
 	public HomePage homePage;
+	String browser = System.getProperty("browser");
+	
+	
+	
+	
 	
 	//@Parameters({"url"})
 	@BeforeClass
@@ -38,10 +46,28 @@ public class BaseTest {
 		options.addArguments("start-maximized");
 		options.addArguments("--headless");
 		
+		//Firefox Options
+		FirefoxBinary fixerfoxBinary = new FirefoxBinary();
+		fixerfoxBinary.addCommandLineOptions("--headless");
+		FirefoxOptions firefoxOPtions =  new FirefoxOptions();
+		firefoxOPtions.setBinary(fixerfoxBinary);
 		
+		if(browser !="" & browser !=null) {
+			if(browser.equalsIgnoreCase("chrome")) {
+				driver = new ChromeDriver(options);
+				driver.manage().window().maximize();
+			}
+			
+			else if(browser.equalsIgnoreCase("firefox")) {
+				driver = new FirefoxDriver(firefoxOPtions);
+			}
+		}
+		else {
+			driver = new ChromeDriver(options);
+		}
 		
 
-		driver = new ChromeDriver(options);
+		
 		//maximize the window
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(6000, TimeUnit.MILLISECONDS);
