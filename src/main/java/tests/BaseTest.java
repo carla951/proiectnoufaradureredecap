@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -40,10 +41,11 @@ public class BaseTest {
 		
 		
 
-		driver = new ChromeDriver();
+		driver = new ChromeDriver(options);
 		//maximize the window
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(6000, TimeUnit.MILLISECONDS);
+		driver.manage().window().setSize(new Dimension(1440, 900));
 		driver.get("https://keybooks.ro/");
 		//driver.get("https://the-internet.herokuapp.com/upload");
 		
